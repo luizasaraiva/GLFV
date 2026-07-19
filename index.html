@@ -1,0 +1,2311 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GLFV — Fotografia & Vídeo</title>
+  <meta name="description" content="Fotografia e vídeo para transformar momentos em memórias eternas." />
+  <style>
+    :root{
+      --black:#070707;
+      --black-2:#111111;
+      --gold:#d6b36a;
+      --gold-2:#f0d79a;
+      --cream:#f5efe4;
+      --white:#ffffff;
+      --muted:#a8a8a8;
+      --border:rgba(214,179,106,.28);
+      --shadow:0 20px 60px rgba(0,0,0,.45);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Inter,Arial,sans-serif;
+      background:var(--black);
+      color:var(--white);
+      line-height:1.6;
+      overflow-x:hidden;
+    }
+
+    h1,h2,h3,.brand{
+      font-family:Georgia,"Times New Roman",serif;
+      font-weight:500;
+      letter-spacing:.02em;
+    }
+
+    a{text-decoration:none;color:inherit}
+    img{width:100%;display:block;object-fit:cover}
+
+    .container{
+      width:min(1180px,92%);
+      margin:0 auto;
+    }
+
+    .eyebrow{
+      color:var(--gold);
+      text-transform:uppercase;
+      letter-spacing:.3em;
+      font-size:.75rem;
+      margin-bottom:14px;
+    }
+
+    .section{
+      padding:100px 0;
+    }
+
+    .section-title{
+      font-size:clamp(2.2rem,5vw,4.5rem);
+      line-height:1.05;
+      max-width:780px;
+    }
+
+    .section-copy{
+      color:var(--muted);
+      max-width:620px;
+      margin-top:18px;
+      font-size:1.02rem;
+    }
+
+    header{
+      position:fixed;
+      inset:0 0 auto 0;
+      z-index:50;
+      background:linear-gradient(to bottom,rgba(0,0,0,.88),rgba(0,0,0,.3),transparent);
+      backdrop-filter:blur(8px);
+    }
+
+    nav{
+      height:82px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .brand{
+      font-size:1.7rem;
+      letter-spacing:.14em;
+    }
+
+    .brand span{color:var(--gold)}
+
+    .nav-links{
+      display:flex;
+      gap:26px;
+      align-items:center;
+      font-size:.92rem;
+    }
+
+    .nav-links a{color:#ddd}
+    .nav-links a:hover{color:var(--gold)}
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:14px 24px;
+      border-radius:999px;
+      border:1px solid var(--gold);
+      transition:.25s ease;
+      font-weight:600;
+      cursor:pointer;
+    }
+
+    .btn-primary{
+      background:var(--gold);
+      color:#080808;
+    }
+
+    .btn-primary:hover{
+      background:var(--gold-2);
+      transform:translateY(-2px);
+    }
+
+    .btn-ghost{
+      background:transparent;
+      color:var(--white);
+    }
+
+    .btn-ghost:hover{
+      background:rgba(214,179,106,.12);
+    }
+
+    .hero{
+      min-height:100vh;
+      display:flex;
+      align-items:end;
+      position:relative;
+      background:
+        linear-gradient(90deg,rgba(0,0,0,.88) 0%,rgba(0,0,0,.52) 45%,rgba(0,0,0,.12) 100%),
+        url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=85') center/cover;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:auto 0 0 0;
+      height:180px;
+      background:linear-gradient(to top,var(--black),transparent);
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:2;
+      padding:170px 0 110px;
+      max-width:760px;
+    }
+
+    .hero h1{
+      font-size:clamp(3.3rem,8vw,7.3rem);
+      line-height:.93;
+      margin-bottom:24px;
+    }
+
+    .hero h1 span{
+      color:var(--gold);
+      font-style:italic;
+    }
+
+    .hero p{
+      max-width:630px;
+      color:#dedede;
+      font-size:1.08rem;
+      margin-bottom:32px;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .hero-stat{
+      position:absolute;
+      right:4%;
+      bottom:110px;
+      z-index:3;
+      border-left:1px solid var(--gold);
+      padding-left:20px;
+      color:#eee;
+    }
+
+    .hero-stat strong{
+      display:block;
+      font-size:2rem;
+      color:var(--gold);
+      font-family:Georgia,serif;
+    }
+
+    .intro{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:60px;
+      align-items:center;
+    }
+
+    .intro-card{
+      position:relative;
+      min-height:520px;
+      background:
+        linear-gradient(to top,rgba(0,0,0,.66),transparent),
+        url('IMG_0750.JPG') center/cover;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+    }
+
+    .intro-badge{
+      position:absolute;
+      left:-26px;
+      bottom:30px;
+      background:var(--gold);
+      color:#090909;
+      width:145px;
+      height:145px;
+      display:grid;
+      place-items:center;
+      text-align:center;
+      border-radius:50%;
+      font-family:Georgia,serif;
+      font-size:1.08rem;
+      padding:18px;
+    }
+
+    .portfolio{
+      background:var(--black-2);
+    }
+
+    .portfolio-grid{
+      margin-top:48px;
+      display:grid;
+      grid-template-columns:1.25fr .75fr .75fr;
+      grid-auto-rows:250px;
+      gap:16px;
+    }
+
+    .work{
+      position:relative;
+      overflow:hidden;
+      border:1px solid var(--border);
+    }
+
+    .work:first-child{
+      grid-row:span 2;
+    }
+
+    .work img{
+      height:100%;
+      transition:transform .6s ease;
+      filter:saturate(.8) contrast(1.03);
+    }
+
+    .work:hover img{transform:scale(1.06)}
+
+    .work-overlay{
+      position:absolute;
+      inset:auto 0 0 0;
+      padding:24px;
+      background:linear-gradient(to top,rgba(0,0,0,.9),transparent);
+    }
+
+    .work-overlay small{
+      color:var(--gold);
+      text-transform:uppercase;
+      letter-spacing:.2em;
+    }
+
+    .work-overlay h3{
+      font-size:1.55rem;
+      margin-top:4px;
+    }
+
+    .services-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+      margin-top:48px;
+    }
+
+    .service{
+      border:1px solid var(--border);
+      padding:34px;
+      background:linear-gradient(145deg,#111,#090909);
+      min-height:300px;
+      transition:.25s ease;
+    }
+
+    .service:hover{
+      transform:translateY(-6px);
+      border-color:var(--gold);
+    }
+
+    .service-number{
+      color:var(--gold);
+      font-family:Georgia,serif;
+      font-size:2.5rem;
+      opacity:.75;
+    }
+
+    .service h3{
+      font-size:1.8rem;
+      margin:24px 0 12px;
+    }
+
+    .service p{
+      color:var(--muted);
+    }
+
+    .quote{
+      background:
+        linear-gradient(rgba(0,0,0,.76),rgba(0,0,0,.76)),
+        url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1800&q=85') center/cover fixed;
+      text-align:center;
+      border-block:1px solid var(--border);
+    }
+
+    .quote blockquote{
+      font-family:Georgia,serif;
+      font-size:clamp(2rem,4vw,4rem);
+      line-height:1.25;
+      max-width:900px;
+      margin:auto;
+    }
+
+    .quote span{color:var(--gold)}
+
+    .cta-box{
+      border:1px solid var(--gold);
+      padding:58px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:30px;
+      background:linear-gradient(135deg,rgba(214,179,106,.1),rgba(255,255,255,.01));
+    }
+
+    .cta-box h2{
+      font-size:clamp(2rem,4vw,3.8rem);
+      max-width:700px;
+      line-height:1.05;
+    }
+
+    footer{
+      border-top:1px solid var(--border);
+      padding:42px 0;
+      color:var(--muted);
+    }
+
+    .footer-row{
+      display:flex;
+      justify-content:space-between;
+      gap:24px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .socials{
+      display:flex;
+      gap:18px;
+    }
+
+    .socials a:hover{color:var(--gold)}
+
+
+    .catalogo{
+      background:var(--cream);
+      color:var(--black);
+    }
+
+    .catalogo .eyebrow{
+      color:#9b6f27;
+    }
+
+    .catalogo .section-title{
+      color:#111;
+    }
+
+    .catalogo-intro{
+      color:#6e675f;
+      max-width:720px;
+      margin-top:18px;
+      font-size:1.05rem;
+    }
+
+    .catalogo-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:24px;
+      margin-top:48px;
+      align-items:stretch;
+    }
+
+    .catalogo-card{
+      background:#fff;
+      border:1px solid #e6dccd;
+      border-radius:28px;
+      padding:34px;
+      min-height:520px;
+      display:flex;
+      flex-direction:column;
+      box-shadow:0 18px 50px rgba(29,22,13,.08);
+      transition:.25s ease;
+    }
+
+    .catalogo-card:hover{
+      transform:translateY(-6px);
+      border-color:#c8a364;
+      box-shadow:0 24px 60px rgba(29,22,13,.13);
+    }
+
+    .catalogo-card.featured{
+      border-color:#c8a364;
+      position:relative;
+    }
+
+    .catalogo-tag{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      color:#9b6f27;
+      text-transform:uppercase;
+      letter-spacing:.28em;
+      font-size:.72rem;
+      font-weight:700;
+      margin-bottom:30px;
+    }
+
+    .catalogo-badge{
+      background:#111;
+      color:#fff;
+      border-radius:999px;
+      padding:8px 14px;
+      letter-spacing:.12em;
+      font-size:.68rem;
+      white-space:nowrap;
+    }
+
+    .catalogo-card h3{
+      font-size:1.9rem;
+      margin-bottom:8px;
+      color:#111;
+    }
+
+    .catalogo-price{
+      font-family:Georgia,"Times New Roman",serif;
+      color:#a8782e;
+      font-size:2.1rem;
+      margin-bottom:12px;
+    }
+
+    .catalogo-desc{
+      color:#6e675f;
+      margin-bottom:24px;
+    }
+
+    .catalogo-list{
+      list-style:none;
+      display:grid;
+      gap:16px;
+      margin-bottom:32px;
+      color:#111;
+      font-size:1rem;
+    }
+
+    .catalogo-list li{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+    }
+
+    .catalogo-list li::before{
+      content:"✓";
+      color:#a8782e;
+      font-size:1.25rem;
+      line-height:1;
+      margin-top:2px;
+    }
+
+    .catalogo-card .btn{
+      margin-top:auto;
+      width:100%;
+      color:#111;
+      border-color:#d9d2c8;
+      background:#fff;
+    }
+
+    .catalogo-card .btn:hover,
+    .catalogo-card.featured .btn{
+      background:#b49358;
+      color:#fff;
+      border-color:#b49358;
+    }
+
+    .album-button{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      color:var(--gold);
+      font-size:.9rem;
+      margin-top:10px;
+      font-weight:700;
+    }
+
+    @media (max-width:900px){
+      .nav-links a:not(.btn){display:none}
+      .hero-stat{display:none}
+      .intro{grid-template-columns:1fr}
+      .intro-card{min-height:420px}
+      .portfolio-grid{
+        grid-template-columns:1fr 1fr;
+      }
+      .work:first-child{
+        grid-column:span 2;
+        grid-row:span 1;
+      }
+      .services-grid{grid-template-columns:1fr}
+      .catalogo-grid{grid-template-columns:1fr}
+      .cta-box{align-items:flex-start;flex-direction:column}
+    }
+
+    @media (max-width:600px){
+      nav{height:70px}
+      .brand{font-size:1.35rem}
+      .nav-links .btn{padding:10px 16px;font-size:.84rem}
+      .hero-content{padding-bottom:80px}
+      .hero h1{font-size:3.5rem}
+      .section{padding:74px 0}
+      .portfolio-grid{
+        grid-template-columns:1fr;
+        grid-auto-rows:280px;
+      }
+      .work:first-child{grid-column:auto}
+      .intro-badge{
+        left:18px;
+        width:120px;
+        height:120px;
+        font-size:.92rem;
+      }
+      .cta-box{padding:34px 24px}
+    }
+  
+  /* ===== GLFV 2.0 — refinamento visual ===== */
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap');
+
+  :root{
+    --black:#050505;
+    --black-2:#0c0c0c;
+    --black-3:#141414;
+    --gold:#c9a568;
+    --gold-2:#e4c995;
+    --gold-deep:#8d6428;
+    --cream:#f5f1e9;
+    --white:#ffffff;
+    --muted:#aaa7a1;
+    --border:rgba(201,165,104,.22);
+    --shadow:0 24px 80px rgba(0,0,0,.42);
+    --radius-xl:34px;
+    --radius-lg:24px;
+    --radius-md:16px;
+  }
+
+  body{
+    font-family:"DM Sans",Arial,sans-serif;
+    letter-spacing:-.01em;
+    background:
+      radial-gradient(circle at 10% 0%,rgba(201,165,104,.08),transparent 28%),
+      var(--black);
+  }
+
+  h1,h2,h3,.brand{
+    font-family:"Playfair Display",Georgia,serif;
+    letter-spacing:-.025em;
+  }
+
+  .container{width:min(1240px,92%)}
+
+  .section{padding:120px 0}
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:8px 13px;
+    border:1px solid var(--border);
+    border-radius:999px;
+    background:rgba(201,165,104,.07);
+    letter-spacing:.19em;
+    font-size:.68rem;
+    font-weight:700;
+  }
+
+  .eyebrow::before{
+    content:"";
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--gold);
+    box-shadow:0 0 18px rgba(201,165,104,.9);
+  }
+
+  .section-title{
+    margin-top:20px;
+    font-size:clamp(2.5rem,5vw,5rem);
+    line-height:1;
+    letter-spacing:-.045em;
+  }
+
+  .section-copy{
+    font-size:1.03rem;
+    line-height:1.85;
+    color:#b9b6b0;
+  }
+
+  header{
+    top:16px;
+    left:50%;
+    width:min(1240px,94%);
+    transform:translateX(-50%);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:20px;
+    background:rgba(8,8,8,.72);
+    box-shadow:0 12px 40px rgba(0,0,0,.24);
+  }
+
+  nav{
+    height:96px;
+    padding:0 20px;
+  }
+
+  .brand{
+    font-family:"DM Sans",Arial,sans-serif;
+    font-size:1.35rem;
+    font-weight:700;
+    letter-spacing:.22em;
+  }
+
+  .nav-links{
+    gap:10px;
+    padding:6px;
+    border-radius:999px;
+  }
+
+  .nav-links > a:not(.btn){
+    padding:10px 14px;
+    border-radius:999px;
+    color:#c9c7c2;
+    transition:.25s ease;
+  }
+
+  .nav-links > a:not(.btn):hover{
+    color:#fff;
+    background:rgba(255,255,255,.06);
+  }
+
+  .btn{
+    min-height:48px;
+    border-radius:14px;
+    padding:0 22px;
+    font-size:.9rem;
+    letter-spacing:.01em;
+    box-shadow:none;
+  }
+
+  .btn-primary{
+    border:none;
+    background:linear-gradient(135deg,var(--gold-2),var(--gold));
+    box-shadow:0 12px 30px rgba(201,165,104,.22);
+  }
+
+  .btn-primary:hover{
+    transform:translateY(-3px);
+    box-shadow:0 18px 34px rgba(201,165,104,.3);
+  }
+
+  .hero{
+    min-height:100svh;
+    align-items:center;
+    border-radius:0 0 40px 40px;
+    overflow:hidden;
+    background:
+      linear-gradient(90deg,rgba(0,0,0,.91) 0%,rgba(0,0,0,.58) 45%,rgba(0,0,0,.18) 100%),
+      url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=90') center/cover;
+  }
+
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      radial-gradient(circle at 74% 48%,rgba(201,165,104,.16),transparent 28%),
+      linear-gradient(to top,rgba(5,5,5,.5),transparent 45%);
+    pointer-events:none;
+  }
+
+  .hero-content{
+    padding:170px 0 90px;
+    max-width:850px;
+  }
+
+  .hero h1{
+    font-size:clamp(4rem,8.5vw,8rem);
+    line-height:.9;
+    max-width:1000px;
+    text-wrap:balance;
+  }
+
+  .hero h1 span{
+    display:block;
+    margin-top:10px;
+    font-weight:500;
+  }
+
+  .hero p{
+    font-size:1.08rem;
+    line-height:1.8;
+    max-width:610px;
+    color:#cfcdc8;
+  }
+
+  .hero-actions{gap:12px}
+
+  .hero-stat{
+    right:5%;
+    bottom:70px;
+    padding:20px 22px;
+    border:1px solid rgba(255,255,255,.1);
+    border-left:1px solid var(--gold);
+    border-radius:18px;
+    background:rgba(7,7,7,.5);
+    backdrop-filter:blur(14px);
+  }
+
+  .intro{
+    gap:90px;
+  }
+
+  .intro-card{
+    min-height:620px;
+    border-radius:var(--radius-xl);
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.1);
+    box-shadow:var(--shadow);
+  }
+
+  .intro-card::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to top,rgba(0,0,0,.6),transparent 52%);
+  }
+
+  .intro-badge{
+    left:28px;
+    bottom:28px;
+    z-index:2;
+    width:auto;
+    height:auto;
+    max-width:220px;
+    padding:18px 22px;
+    border-radius:18px;
+    font-family:"DM Sans",sans-serif;
+    font-size:.82rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.09em;
+    box-shadow:0 14px 40px rgba(0,0,0,.28);
+  }
+
+  .portfolio{
+    background:
+      radial-gradient(circle at 85% 10%,rgba(201,165,104,.08),transparent 30%),
+      var(--black-2);
+  }
+
+  .portfolio-grid{
+    grid-template-columns:1.15fr .85fr .85fr;
+    grid-auto-rows:300px;
+    gap:20px;
+  }
+
+  .work{
+    border-radius:24px;
+    border:1px solid rgba(255,255,255,.08);
+    background:#111;
+    box-shadow:0 16px 40px rgba(0,0,0,.22);
+  }
+
+  .work::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:inherit;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
+    pointer-events:none;
+  }
+
+  .work img{
+    filter:saturate(.88) contrast(1.04);
+    transition:transform .7s cubic-bezier(.2,.7,.2,1),filter .35s ease;
+  }
+
+  .work:hover img{
+    transform:scale(1.07);
+    filter:saturate(1) contrast(1.06);
+  }
+
+  .work-overlay{
+    padding:28px;
+    background:linear-gradient(to top,rgba(0,0,0,.94),rgba(0,0,0,.02));
+  }
+
+  .work-overlay small{
+    font-family:"DM Sans",sans-serif;
+    font-size:.68rem;
+    font-weight:700;
+  }
+
+  .work-overlay h3{
+    font-size:1.85rem;
+    margin-top:5px;
+  }
+
+  .album-button{
+    display:inline-flex;
+    padding:9px 12px;
+    margin-top:12px;
+    border-radius:10px;
+    background:rgba(255,255,255,.08);
+    color:#fff;
+    font-size:.78rem;
+    letter-spacing:.04em;
+    backdrop-filter:blur(10px);
+    transition:.25s ease;
+  }
+
+  .album-button:hover{
+    background:var(--gold);
+    color:#111;
+    transform:translateX(3px);
+  }
+
+  .catalogo{
+    background:
+      radial-gradient(circle at 10% 20%,rgba(201,165,104,.16),transparent 24%),
+      linear-gradient(180deg,#f8f4ed,#eee8dd);
+  }
+
+  .catalogo .section-title{
+    max-width:900px;
+    color:#17130e;
+  }
+
+  .catalogo-intro{
+    line-height:1.8;
+    font-size:1.02rem;
+  }
+
+  .catalogo-grid{
+    gap:22px;
+    margin-top:58px;
+  }
+
+  .catalogo-card{
+    border-radius:30px;
+    padding:38px;
+    min-height:560px;
+    border:1px solid rgba(94,71,37,.12);
+    background:rgba(255,255,255,.82);
+    backdrop-filter:blur(18px);
+    box-shadow:0 24px 60px rgba(55,40,20,.09);
+  }
+
+  .catalogo-card::before{
+    content:"";
+    width:44px;
+    height:4px;
+    border-radius:999px;
+    background:linear-gradient(90deg,var(--gold-deep),var(--gold));
+    margin-bottom:26px;
+  }
+
+  .catalogo-card.featured{
+    transform:translateY(-12px);
+    background:linear-gradient(180deg,#fff,#f9f5ee);
+    box-shadow:0 30px 80px rgba(77,55,24,.16);
+  }
+
+  .catalogo-card:hover{
+    transform:translateY(-10px);
+  }
+
+  .catalogo-card.featured:hover{
+    transform:translateY(-18px);
+  }
+
+  .catalogo-tag{
+    font-size:.66rem;
+    letter-spacing:.22em;
+    margin-bottom:24px;
+  }
+
+  .catalogo-badge{
+    padding:8px 12px;
+    font-size:.62rem;
+  }
+
+  .catalogo-card h3{
+    font-size:2.1rem;
+    letter-spacing:-.035em;
+  }
+
+  .catalogo-price{
+    font-size:2rem;
+    letter-spacing:-.025em;
+  }
+
+  .catalogo-desc{
+    line-height:1.75;
+    min-height:82px;
+  }
+
+  .catalogo-list{
+    gap:14px;
+    line-height:1.55;
+  }
+
+  .catalogo-card .btn{
+    border-radius:14px;
+    min-height:52px;
+    font-weight:700;
+  }
+
+  .quote{
+    border:none;
+    border-radius:40px;
+    margin:24px;
+    min-height:560px;
+    display:grid;
+    place-items:center;
+    background:
+      linear-gradient(rgba(0,0,0,.72),rgba(0,0,0,.78)),
+      url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1800&q=90') center/cover fixed;
+    overflow:hidden;
+  }
+
+  .quote blockquote{
+    font-size:clamp(2.4rem,5vw,5rem);
+    line-height:1.12;
+    letter-spacing:-.035em;
+  }
+
+  .cta-box{
+    border:none;
+    border-radius:32px;
+    padding:70px;
+    background:
+      radial-gradient(circle at 85% 20%,rgba(228,201,149,.18),transparent 25%),
+      linear-gradient(135deg,#15110c,#090909);
+    box-shadow:var(--shadow);
+  }
+
+  .cta-box h2{
+    font-size:clamp(2.4rem,4.5vw,4.7rem);
+    letter-spacing:-.045em;
+  }
+
+  footer{
+    border-top:1px solid rgba(255,255,255,.08);
+    padding:56px 0;
+  }
+
+  @media (max-width:900px){
+    header{
+      top:10px;
+      border-radius:16px;
+    }
+
+    .hero{
+      border-radius:0 0 28px 28px;
+    }
+
+    .hero h1{
+      font-size:clamp(3.4rem,13vw,5.8rem);
+    }
+
+    .portfolio-grid{
+      grid-template-columns:1fr 1fr;
+      grid-auto-rows:280px;
+    }
+
+    .catalogo-card.featured,
+    .catalogo-card.featured:hover{
+      transform:none;
+    }
+
+    .intro{gap:50px}
+    .intro-card{min-height:500px}
+    .quote{margin:12px;border-radius:28px}
+  }
+
+  @media (max-width:600px){
+    .section{padding:84px 0}
+    header{width:94%}
+    nav{height:82px;padding:0 12px}
+    .hero-content{padding-top:145px}
+    .hero h1{font-size:3.45rem}
+    .hero p{font-size:1rem}
+    .hero-actions .btn{width:100%}
+    .portfolio-grid{grid-template-columns:1fr;grid-auto-rows:300px}
+    .work:first-child{grid-column:auto}
+    .catalogo-card{padding:28px;min-height:auto}
+    .cta-box{padding:42px 28px}
+    .quote{min-height:500px;background-attachment:scroll}
+  }
+
+
+  .banlek-section{
+    position:relative;
+    overflow:hidden;
+    background:
+      radial-gradient(circle at 82% 22%,rgba(201,165,104,.14),transparent 26%),
+      linear-gradient(180deg,#0b0b0b,#050505);
+  }
+
+  .banlek-panel{
+    display:grid;
+    grid-template-columns:1.05fr .95fr;
+    gap:54px;
+    align-items:center;
+    margin-top:52px;
+    padding:34px;
+    border:1px solid rgba(255,255,255,.09);
+    border-radius:34px;
+    background:rgba(255,255,255,.035);
+    box-shadow:0 28px 90px rgba(0,0,0,.36);
+    backdrop-filter:blur(16px);
+  }
+
+  .banlek-preview{
+    position:relative;
+    min-height:480px;
+    border-radius:26px;
+    overflow:hidden;
+    background:
+      linear-gradient(to top,rgba(0,0,0,.72),rgba(0,0,0,.08)),
+      url('https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1400&q=90') center/cover;
+  }
+
+  .banlek-preview::after{
+    content:"Galerias online";
+    position:absolute;
+    left:24px;
+    bottom:24px;
+    padding:10px 14px;
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;
+    background:rgba(0,0,0,.46);
+    color:#fff;
+    font-size:.76rem;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    backdrop-filter:blur(12px);
+  }
+
+  .banlek-content h3{
+    font-size:clamp(2.2rem,4vw,4rem);
+    line-height:1.04;
+    margin-bottom:18px;
+  }
+
+  .banlek-content p{
+    color:#b9b6b0;
+    line-height:1.85;
+    margin-bottom:16px;
+  }
+
+  .banlek-benefits{
+    display:grid;
+    gap:12px;
+    margin:28px 0 34px;
+  }
+
+  .banlek-benefits span{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:#ece8df;
+  }
+
+  .banlek-benefits span::before{
+    content:"✓";
+    display:grid;
+    place-items:center;
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    background:rgba(201,165,104,.13);
+    color:var(--gold-2);
+    font-size:.78rem;
+    font-weight:700;
+  }
+
+  .banlek-actions{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+
+  @media (max-width:900px){
+    .banlek-panel{
+      grid-template-columns:1fr;
+      gap:34px;
+    }
+
+    .banlek-preview{
+      min-height:390px;
+    }
+  }
+
+  @media (max-width:600px){
+    .banlek-panel{
+      padding:20px;
+      border-radius:24px;
+    }
+
+    .banlek-preview{
+      min-height:310px;
+      border-radius:20px;
+    }
+
+    .banlek-actions .btn{
+      width:100%;
+    }
+  }
+
+
+  .brand-logo{display:flex;align-items:center}
+  .brand-logo img{width:auto;height:78px;object-fit:contain;display:block}
+  footer .brand-logo img{height:90px}
+  @media (max-width:600px){
+    .brand-logo img{height:64px}
+    footer .brand-logo img{height:72px}
+  }
+
+
+  /* Logo centralizada no menu superior */
+  header nav{
+    position:relative;
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:center;
+  }
+
+  header .brand-logo{
+    grid-column:2;
+    justify-self:center;
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:3;
+  }
+
+  header .nav-links{
+    grid-column:3;
+    justify-self:end;
+  }
+
+  @media (max-width:900px){
+    header nav{
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    header .brand-logo{
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+    }
+  }
+
+
+/* ===== Ajuste final: logo à esquerda e rodapé centralizado ===== */
+header nav{
+  position:relative !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:28px !important;
+  padding-left:28px !important;
+  padding-right:18px !important;
+}
+
+header .brand-logo{
+  position:static !important;
+  left:auto !important;
+  transform:none !important;
+  grid-column:auto !important;
+  justify-self:auto !important;
+  margin:0 !important;
+  flex:0 0 auto !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+
+header .brand-logo img{
+  display:block !important;
+  object-fit:contain !important;
+  max-width:150px !important;
+  width:auto !important;
+}
+
+header .nav-links{
+  margin-left:auto !important;
+  grid-column:auto !important;
+  justify-self:auto !important;
+}
+
+footer,
+footer .container,
+footer .footer-row{
+  text-align:center !important;
+}
+
+footer .container{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:10px !important;
+}
+
+footer .footer-row{
+  justify-content:center !important;
+  align-items:center !important;
+  flex-direction:column !important;
+}
+
+footer small,
+footer p,
+footer div{
+  text-align:center !important;
+}
+
+@media (max-width:900px){
+  header nav{
+    padding-left:18px !important;
+    padding-right:12px !important;
+  }
+
+  header .brand-logo img{
+    max-width:125px !important;
+  }
+}
+
+@media (max-width:600px){
+  header nav{
+    padding-left:14px !important;
+    padding-right:10px !important;
+    gap:12px !important;
+  }
+
+  header .brand-logo img{
+    max-width:105px !important;
+  }
+}
+
+
+/* Todas as capas do portfólio seguem o padrão do Ensaio Externo */
+.portfolio-grid .work > img{
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  object-position:center center !important;
+  display:block !important;
+}
+
+
+/* ===== Orçamentos detalhados ===== */
+.budget-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:22px;
+  margin-top:42px;
+}
+.budget-card{
+  min-height:315px;
+  padding:30px;
+  border:1px solid rgba(212,175,55,.24);
+  border-radius:24px;
+  background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+  display:flex;
+  flex-direction:column;
+  cursor:pointer;
+  transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;
+  outline:none;
+}
+.budget-card:hover,.budget-card:focus-visible{
+  transform:translateY(-6px);
+  border-color:rgba(212,175,55,.72);
+  box-shadow:0 24px 60px rgba(0,0,0,.32);
+}
+.budget-card-tag{
+  color:var(--gold);
+  text-transform:uppercase;
+  letter-spacing:.17em;
+  font-size:.72rem;
+  font-weight:700;
+  margin-bottom:22px;
+}
+.budget-card h3{
+  font-family:"Cormorant Garamond",serif;
+  font-size:2.1rem;
+  margin:0 0 10px;
+}
+.budget-card-price{
+  color:var(--gold);
+  font-weight:700;
+  font-size:1.08rem;
+  margin-bottom:18px;
+}
+.budget-card-copy{
+  color:var(--muted);
+  line-height:1.72;
+  margin:0 0 25px;
+}
+.budget-card-link{
+  margin-top:auto;
+  font-weight:700;
+  color:#fff;
+}
+.budget-card-link span{color:var(--gold);margin-left:5px}
+.budget-modal{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+.budget-modal.is-open{display:flex}
+.budget-modal-backdrop{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.82);
+  backdrop-filter:blur(8px);
+}
+.budget-modal-dialog{
+  position:relative;
+  width:min(920px,100%);
+  max-height:90vh;
+  overflow:auto;
+  border:1px solid rgba(212,175,55,.38);
+  border-radius:28px;
+  background:#0c0c0c;
+  box-shadow:0 30px 100px rgba(0,0,0,.7);
+}
+.budget-modal-header{
+  padding:42px 46px 28px;
+  border-bottom:1px solid rgba(255,255,255,.09);
+}
+.budget-modal-header h3{
+  font-family:"Cormorant Garamond",serif;
+  font-size:clamp(2.2rem,5vw,4rem);
+  line-height:1;
+  margin:10px 0 20px;
+}
+.budget-modal-header h3 span{
+  display:block;
+  color:var(--gold);
+  font-family:inherit;
+  font-size:.52em;
+  margin-top:12px;
+}
+.budget-modal-intro{
+  color:var(--muted);
+  line-height:1.8;
+  max-width:760px;
+}
+.budget-modal-close{
+  position:sticky;
+  float:right;
+  top:16px;
+  right:18px;
+  z-index:4;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.16);
+  background:#171717;
+  color:#fff;
+  font-size:1.65rem;
+  cursor:pointer;
+}
+.budget-modal-content{
+  padding:30px 46px 12px;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
+}
+.budget-detail-section{
+  padding:22px;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:18px;
+  background:rgba(255,255,255,.025);
+}
+.budget-detail-section h4{
+  color:var(--gold);
+  font-size:1rem;
+  margin:0 0 14px;
+  text-transform:none;
+}
+.budget-detail-section ul{
+  margin:0;
+  padding-left:18px;
+}
+.budget-detail-section li{
+  color:#dedede;
+  line-height:1.6;
+  margin:7px 0;
+}
+.budget-modal-footer{
+  padding:24px 46px 42px;
+}
+body.budget-modal-open{overflow:hidden}
+@media(max-width:900px){
+  .budget-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:650px){
+  .budget-grid{grid-template-columns:1fr}
+  .budget-modal{padding:10px}
+  .budget-modal-header,.budget-modal-content,.budget-modal-footer{padding-left:22px;padding-right:22px}
+  .budget-modal-content{grid-template-columns:1fr}
+  .budget-modal-dialog{max-height:96vh;border-radius:20px}
+}
+
+
+
+
+/* Botões dourados modernos e elegantes */
+.budget-card-link,
+.budget-request-btn,
+a[href="#servicos"].btn,
+a[href="#orcamentos"].btn{
+  display:inline-flex!important;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  width:max-content;
+  padding:12px 20px!important;
+  border-radius:999px!important;
+  font-weight:700!important;
+  text-decoration:none!important;
+  color:#111!important;
+  border:1px solid rgba(255,255,255,.16)!important;
+  background:
+    linear-gradient(135deg,
+      rgba(255,255,255,.22) 0%,
+      rgba(255,255,255,.05) 22%,
+      rgba(255,255,255,0) 38%),
+    linear-gradient(135deg,
+      #c9a857 0%,
+      var(--gold) 48%,
+      #a8822f 100%)!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.22),
+    0 6px 16px rgba(0,0,0,.18);
+  transition:
+    transform .22s ease,
+    box-shadow .22s ease,
+    filter .22s ease;
+}
+
+.budget-card-link:hover,
+.budget-card:hover .budget-card-link,
+.budget-card:focus-visible .budget-card-link,
+.budget-request-btn:hover,
+a[href="#servicos"].btn:hover,
+a[href="#orcamentos"].btn:hover{
+  color:#111!important;
+  transform:translateY(-1px);
+  filter:brightness(1.04);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.28),
+    0 9px 22px rgba(0,0,0,.24);
+}
+
+.budget-card-link:active,
+.budget-request-btn:active,
+a[href="#servicos"].btn:active,
+a[href="#orcamentos"].btn:active{
+  transform:translateY(0);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.18),
+    0 4px 12px rgba(0,0,0,.18);
+}
+
+.budget-card-other{
+  border-color:var(--gold)!important;
+}
+
+
+
+/* Refinamento profissional dos botões e correção da logo */
+.logo img,
+.brand img,
+header img[alt*="GLFV" i],
+footer img[alt*="GLFV" i]{
+  display:block !important;
+  width:auto !important;
+  max-width:170px !important;
+  max-height:64px !important;
+  object-fit:contain !important;
+  opacity:1 !important;
+  visibility:visible !important;
+}
+
+.budget-card-link,
+.budget-request-btn,
+a[href="#servicos"].btn,
+a[href="#orcamentos"].btn{
+  font-family:Inter, Arial, sans-serif !important;
+  font-size:.78rem !important;
+  font-weight:600 !important;
+  letter-spacing:.08em !important;
+  line-height:1 !important;
+  text-transform:uppercase !important;
+  white-space:nowrap !important;
+  padding:13px 19px !important;
+}
+
+.budget-card-link span{
+  font-size:1rem !important;
+  line-height:1 !important;
+  margin-left:2px !important;
+}
+
+@media(max-width:650px){
+  .logo img,
+  .brand img,
+  header img[alt*="GLFV" i],
+  footer img[alt*="GLFV" i]{
+    max-width:140px !important;
+    max-height:54px !important;
+  }
+
+  .budget-card-link,
+  .budget-request-btn,
+  a[href="#servicos"].btn,
+  a[href="#orcamentos"].btn{
+    font-size:.72rem !important;
+    letter-spacing:.065em !important;
+    padding:12px 16px !important;
+  }
+}
+
+</style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <a class="brand-logo" href="#inicio" aria-label="GLFV Fotografia e Vídeo"><img src="GLFV-logo-branca.png" alt="GLFV Fotografia e Vídeo"></a>
+        <div class="nav-links">
+          <a href="#sobre">Sobre</a>
+          <a href="#portfolio">Portfólio</a>
+          <a href="#banlek">Galeria Banlek</a>
+          <a href="#servicos">Serviços</a>
+          <a class="btn btn-primary" href="#orcamento">Solicitar orçamento</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="container">
+        <div class="hero-content">
+          <div class="eyebrow">Fotografia & vídeo</div>
+          <h1>Registrando momentos, <span>eternizando histórias.</span></h1>
+          <p>
+            Transformamos momentos verdadeiros em imagens marcantes, elegantes e cheias de sentimento.
+            Porque o tempo passa — mas aquilo que foi bem registrado pode ser revivido para sempre.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#portfolio">Ver portfólio</a>
+            <a class="btn btn-ghost" href="#orcamento">Conhecer pacotes</a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-stat">
+        <strong>GLFV</strong>
+        Registrando momentos,<br>eternizando histórias.
+      </div>
+    </section>
+
+    <section class="section" id="sobre">
+      <div class="container intro">
+        <div>
+          <div class="eyebrow">Sobre mim</div>
+          <h2 class="section-title">Olá, meu nome é Gianluca e essa é a minha história…</h2>
+          <h3 style="color:var(--gold);font-size:1.65rem;margin-top:28px;">O olhar que sempre esteve aqui</h3>
+          <p class="section-copy">
+            Dizem que a fotografia é a arte de congelar o tempo, mas, para mim, ela sempre foi a minha forma de conversar com o mundo.
+            Eu não me lembro de um tempo em que a fotografia não fizesse parte de quem eu sou. Desde que me conheço por gente,
+            minha visão é emoldurada por ângulos, luzes e, principalmente, pelas histórias que acontecem nos pequenos intervalos do cotidiano.
+          </p>
+          <p class="section-copy">
+            O que começou como um hobby silencioso — um fascínio por observar o que ninguém mais notava — cresceu comigo.
+            A câmera deixou de ser um brinquedo para se tornar uma extensão de mim. Percebi que o que eu fazia por puro prazer
+            tinha um poder enorme: o de eternizar o que é invisível aos olhos apressados.
+          </p>
+          <p class="section-copy">
+            Decidi transformar minha paixão em propósito. Hoje, meu trabalho é oferecer a você o meu olhar para guardar as suas emoções.
+            Não busco apenas a “foto perfeita”; busco a verdade do momento. Seja um sorriso espontâneo, uma lágrima de felicidade
+            ou aquele abraço que parece que vai durar para sempre.
+          </p>
+          <p class="section-copy" style="font-family:Georgia,serif;font-size:1.35rem;color:var(--cream);">
+            Eu não apenas tiro fotos. <strong style="color:var(--gold)">Eu guardo o que você sente.</strong>
+          </p></div>
+        <div class="intro-card">
+          <div class="intro-badge">Fotografia com emoção e propósito</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section portfolio" id="portfolio">
+      <div class="container">
+        <div class="eyebrow">Portfólio</div>
+        <h2 class="section-title">Momentos reais, tratados com elegância.</h2>
+
+        <div class="portfolio-grid">
+          <article class="work">
+            <img src="https://drive.google.com/thumbnail?id=1Ehm22NwvoNo9zerFqS-TK_aouTnITA9e&sz=w2200" alt="Família" / referrerpolicy="no-referrer">
+            <div class="work-overlay">
+              <small>Família</small>
+              <h3>Família</h3>
+              <a class="album-button" href="familia.html">Ver Álbum →</a>
+            </div>
+          </article>
+
+          <article class="work">
+            <img src="https://drive.google.com/thumbnail?id=1ibzw38gICMnvICmZuvrHDpugEXBWxqec&sz=w2200" alt="Automotivo" / referrerpolicy="no-referrer">
+            <div class="work-overlay">
+              <small>Automotivo</small>
+              <h3>Automotivo</h3>
+              <a class="album-button" href="automotivo.html">Ver Álbum →</a>
+            </div>
+          </article>
+
+          <article class="work">
+            <img src="https://drive.google.com/thumbnail?id=16-dzKvD6U1XmpTUZYLNUTwl0NZCQPFlE&sz=w2200" alt="Casamento" / referrerpolicy="no-referrer">
+            <div class="work-overlay">
+              <small>Casamento</small>
+              <h3>Casamento</h3>
+              <a class="album-button" href="casamento.html">Ver Álbum →</a>
+            </div>
+          </article>
+
+          <article class="work">
+            <img src="https://drive.google.com/thumbnail?id=1E5BXRqVjIWrtZMzv99PLsMVRh2O92-aM&sz=w2200" alt="Corporativo" / referrerpolicy="no-referrer">
+            <div class="work-overlay">
+              <small>Corporativo</small>
+              <h3>Corporativo</h3>
+              <a class="album-button" href="corporativo.html">Ver Álbum →</a>
+            </div>
+          </article>
+
+          <article class="work">
+            <img src="https://drive.google.com/thumbnail?id=1x2HbKJU5iNCoWoYBpfyMgj83q2wDTldV&sz=w2200" alt="Esportes" / referrerpolicy="no-referrer">
+            <div class="work-overlay">
+              <small>Esportes</small>
+              <h3>Esportes</h3>
+              <a class="album-button" href="esportes.html">Ver Álbum →</a>
+            </div>
+          </article>
+
+          <article class="work">
+            <img src="https://drive.google.com/thumbnail?id=1LC_BHrc-QQdvRQq5Myn4gLFo6PQrOmwB&sz=w2200" alt="Gestante" / referrerpolicy="no-referrer">
+            <div class="work-overlay">
+              <small>Gestante</small>
+              <h3>Gestante</h3>
+              <a class="album-button" href="gestante.html">Ver Álbum →</a>
+            </div>
+          </article>
+
+          <article class="work">
+            <img src="https://drive.google.com/thumbnail?id=1Hyo3codj_L4kHtLO5Jtt7v13_sQkW_9o&sz=w2200" alt="Pré-wedding" / referrerpolicy="no-referrer">
+            <div class="work-overlay">
+              <small>Pré-wedding</small>
+              <h3>Pré-wedding</h3>
+              <a class="album-button" href="pre-wedding.html">Ver Álbum →</a>
+            </div>
+          </article>
+          <article class="work">
+            <img src="https://drive.google.com/thumbnail?id=1mUtSHmz3z44ulVAkZvrai06myx9l-6Cs&sz=w2200" alt="Ensaio Externo" referrerpolicy="no-referrer" />
+            <div class="work-overlay">
+              <small>Ensaio Externo</small>
+              <h3>Ensaio Externo</h3>
+              <a class="album-button" href="ensaio-externo.html">Ver Álbum →</a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section banlek-section" id="banlek">
+      <div class="container">
+        <div class="eyebrow">Galeria do cliente</div>
+        <h2 class="section-title">Suas fotos disponíveis na plataforma Banlek.</h2>
+        <p class="section-copy">
+          Acesse sua galeria privada para visualizar, selecionar e baixar as fotografias do seu ensaio ou evento.
+        </p>
+
+        <div class="banlek-panel">
+          <div class="banlek-preview" aria-label="Prévia da galeria de fotos"></div>
+
+          <div class="banlek-content">
+            <h3>Uma experiência simples para reviver cada momento.</h3>
+            <p>
+              Após a liberação do álbum, você receberá o acesso à sua galeria na Banlek.
+              O ambiente reúne suas imagens de forma organizada, elegante e segura.
+            </p>
+
+            <div class="banlek-benefits">
+              <span>Visualização online em celular e computador</span>
+              <span>Seleção das fotografias favoritas</span>
+              <span>Download das imagens liberadas</span>
+              <span>Galeria exclusiva para cada cliente</span>
+            </div>
+
+            <div class="banlek-actions">
+              <a class="btn btn-primary" href="https://banlek.com/GLFV" target="_blank" rel="noopener">
+                Acessar plataforma Banlek
+              </a>
+              <a class="btn btn-ghost" href="https://wa.me/5511914179313?text=Olá!%20Preciso%20de%20ajuda%20para%20acessar%20minha%20galeria%20na%20Banlek." target="_blank" rel="noopener">
+                Solicitar meu acesso
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+<section class="section catalogo" id="servicos">
+  <div class="container">
+    <div class="eyebrow">Orçamentos GLFV</div>
+    <h2 class="section-title">Escolha o serviço e veja todas as informações detalhadas.</h2>
+    <p class="catalogo-intro">Clique em qualquer orçamento para visualizar exatamente os pacotes, valores, formas de pagamento, prazos de entrega, adicionais e regras descritos no documento.</p>
+    <div class="budget-grid">
+      
+      <article class="budget-card" tabindex="0" role="button" aria-haspopup="dialog" data-budget-open="aniversario">
+        <div class="budget-card-tag">Eventos</div>
+        <h3>Aniversario</h3>
+        <div class="budget-card-price">a partir de R$120,00</div>
+        <p class="budget-card-copy">Cada sorriso, cada olhar e cada detalhe dessa fase única merecem ser eternizados. Estaremos presentes para transformar esse dia especial em lembranças que vocês vão guardar para sempre. Vai ser inesquecivel</p>
+        <span class="budget-card-link">Ver orçamento completo <span aria-hidden="true">→</span></span>
+      </article>
+    
+      <article class="budget-card" tabindex="0" role="button" aria-haspopup="dialog" data-budget-open="ensaios">
+        <div class="budget-card-tag">Ensaios</div>
+        <h3>Ensaios</h3>
+        <div class="budget-card-price">a partir de R$144,50</div>
+        <p class="budget-card-copy">É uma alegria poder te apresentar nossas opções de ensaios pensados com muito carinho para registrar esse momento único e inesquecível da sua vida. Cada detalhe será feito para que você se sinta linda(o), confiante e tenha memorias que vão durar para sempre!</p>
+        <span class="budget-card-link">Ver orçamento completo <span aria-hidden="true">→</span></span>
+      </article>
+    
+      <article class="budget-card" tabindex="0" role="button" aria-haspopup="dialog" data-budget-open="casamentos">
+        <div class="budget-card-tag">Casamentos</div>
+        <h3>Casamentos</h3>
+        <div class="budget-card-price">a partir de R$850,00</div>
+        <p class="budget-card-copy">Clique para visualizar todas as informações detalhadas.</p>
+        <span class="budget-card-link">Ver orçamento completo <span aria-hidden="true">→</span></span>
+      </article>
+    
+      <article class="budget-card" tabindex="0" role="button" aria-haspopup="dialog" data-budget-open="debutante">
+        <div class="budget-card-tag">15 anos</div>
+        <h3>Debutante</h3>
+        <div class="budget-card-price">a partir de R$850,00</div>
+        <p class="budget-card-copy">Clique para visualizar todas as informações detalhadas.</p>
+        <span class="budget-card-link">Ver orçamento completo <span aria-hidden="true">→</span></span>
+      </article>
+    
+      <article class="budget-card" tabindex="0" role="button" aria-haspopup="dialog" data-budget-open="esportivas">
+        <div class="budget-card-tag">Esportes</div>
+        <h3>fotos esportivas</h3>
+        <div class="budget-card-price">a partir de R$300,00</div>
+        <p class="budget-card-copy">Clique para visualizar todas as informações detalhadas.</p>
+        <span class="budget-card-link">Ver orçamento completo <span aria-hidden="true">→</span></span>
+      </article>
+    
+      <article class="budget-card" tabindex="0" role="button" aria-haspopup="dialog" data-budget-open="pre-wedding">
+        <div class="budget-card-tag">Casais</div>
+        <h3>Pré Wedding</h3>
+        <div class="budget-card-price">a partir de R$425,00</div>
+        <p class="budget-card-copy">O ensaio Pré Wedding é mais do que uma sessão de fotos, é a oportunidade de registrar a essência do casal antes de um dos dias mais importantes de suas vidas. Cada imagem é pensada para contar a história de vocês de forma leve, elegante e atemporal.</p>
+        <span class="budget-card-link">Ver orçamento completo <span aria-hidden="true">→</span></span>
+      </article>
+      <article class="budget-card budget-card-other" tabindex="0" role="button" aria-haspopup="dialog" data-budget-open="outros">
+        <div class="budget-card-tag">Personalizado</div>
+        <h3>Outros</h3>
+        <div class="budget-card-price">Solicite um orçamento personalizado</div>
+        <p class="budget-card-copy">Não encontrou o serviço que procura? Conte para nós o que você precisa e criaremos uma proposta personalizada para o seu projeto.</p>
+        <span class="budget-card-link">Solicitar orçamento <span aria-hidden="true">→</span></span>
+      </article>
+
+    
+    </div>
+  </div>
+</section>
+
+    <div class="budget-modal" id="budget-aniversario" aria-hidden="true">
+      <div class="budget-modal-backdrop" data-budget-close></div>
+      <div class="budget-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="title-aniversario">
+        <button class="budget-modal-close" type="button" aria-label="Fechar orçamento" data-budget-close>×</button>
+        <div class="budget-modal-header">
+          <div class="eyebrow">Orçamentos GLFV</div>
+          <h3 id="title-aniversario">Aniversario <span>a partir de R$120,00</span></h3>
+          <p class="budget-modal-intro">Cada sorriso, cada olhar e cada detalhe dessa fase única merecem ser eternizados. Estaremos presentes para transformar esse dia especial em lembranças que vocês vão guardar para sempre. Vai ser inesquecivel</p>
+        </div>
+        <div class="budget-modal-content">
+          
+        <section class="budget-detail-section">
+          <h4>Cobertura</h4>
+          <ul><li>R$120,00 por hora até 3 horas de cobertura, R$60,00 por hora a partir da 4° hora fotos digitais ilimitadas entregues 100% editadas e tratadas.</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Local da festa</h4>
+          <ul><li>O local da cobertura fica a critério do contratante, os valores desta tabela contemplam deslocamento de até 30km ida + volta, ultrapassada essa distância será cobrado R$1,50 por km excedido.</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Formas de pagamento</h4>
+          <ul><li>50% pix na reserva da data e serviço, e os outros 50% até o dia do evento</li><li>20% no pix na reserva da data e serviço, os outros 80% no cartão em até 12x (valor sujeito a alteração devido a taxas)</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Adicionais</h4>
+          <ul><li>Storymaker por R$350,00 valor fixo</li><li>vídeo da festa por R$500,00 valor fixo</li><li>+1 profissional R$400,00 valor fixo</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>entrega do material</h4>
+          <ul><li>prévia em até 24hrs pós-evento (quando aplicável)</li><li>100% do material entregue em até 7 dias uteis pós-evento, envio via google drive</li></ul>
+        </section>
+        </div>
+        <div class="budget-modal-footer">
+          <a class="btn btn-primary" href="https://wa.me/5511914179313?text=Olá! Quero solicitar o orçamento de Aniversario." target="_blank" rel="noopener">Solicitar pelo WhatsApp</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="budget-modal" id="budget-ensaios" aria-hidden="true">
+      <div class="budget-modal-backdrop" data-budget-close></div>
+      <div class="budget-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="title-ensaios">
+        <button class="budget-modal-close" type="button" aria-label="Fechar orçamento" data-budget-close>×</button>
+        <div class="budget-modal-header">
+          <div class="eyebrow">Orçamentos GLFV</div>
+          <h3 id="title-ensaios">Ensaios <span>a partir de R$144,50</span></h3>
+          <p class="budget-modal-intro">É uma alegria poder te apresentar nossas opções de ensaios pensados com muito carinho para registrar esse momento único e inesquecível da sua vida. Cada detalhe será feito para que você se sinta linda(o), confiante e tenha memorias que vão durar para sempre!</p>
+        </div>
+        <div class="budget-modal-content">
+          
+        <section class="budget-detail-section">
+          <h4>Ensaio no studio — Pacote simples</h4>
+          <ul><li>De R$170,00 por R$144,50</li><li>10 fotos digitais entregues editadas</li><li>1 hr de ensaio</li><li>Fundo branco</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Ensaio no studio — Pacote medio</h4>
+          <ul><li>De R$235,00 por R$199,75</li><li>20 fotos digitais entregues editadas</li><li>1 hr de ensaio</li><li>Fundo branco</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Ensaio no studio — Pacote completo</h4>
+          <ul><li>De R$300,00 por R$255,00</li><li>30 fotos digitais entregues editadas</li><li>1 hr e meia de ensaio</li><li>Fundo branco ou preto</li><li>2 fotos impressas (sem quadros)</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Ensaio ao ar livre — Pacote simples</h4>
+          <ul><li>De R$263,50 por R$223,98</li><li>10 fotos digitais entregues editadas</li><li>1 hr de ensaio</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Ensaio ao ar livre — Pacote medio</h4>
+          <ul><li>De R$364,25 por R$309,61</li><li>20 fotos digitais entregues editadas</li><li>1 hr de ensaio</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Ensaio ao ar livre — Pacote completo</h4>
+          <ul><li>De R$465,00 por R$395,25</li><li>30 fotos digitais entregues editadas</li><li>1 hr e meia de ensaio</li><li>2 fotos impressas (sem quadros)</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Fotos extras</h4>
+          <ul><li>Venda de fotos extras por R$10,00 cada foto, acima de 5 fotos sai R$8,00 cada foto</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Formas de pagamento</h4>
+          <ul><li>50% pix na reserva da data e serviço, e os outros 50% até o dia do evento</li><li>20% no pix na reserva da data e serviço, os outros 80% no cartão em até 12x (valor sujeito a alteração devido a taxas)</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>entrega do material</h4>
+          <ul><li>Prévia em até 24hrs pós-evento (quando aplicável)</li><li>100% do material entregue em até 7 dias uteis pós-evento, envio via google drive</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Para ensaio externo</h4>
+          <ul><li>O local da cobertura fica a critério do contratante, os valores desta tabela contemplam deslocamento de até 30km ida + volta, ultrapassada essa distância será cobrado R$1,50 por km excedido.</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Para ensaio no studio</h4>
+          <ul><li>A seleção deve ser feita no local sendo dado 30 minutos para ser feita a seleção, caso ultrapasse esse tempo será cobrado o valor de R$50,00 a cada 30 minutos excedidos.</li><li>Caso a seleção não consiga ser feita no local, será cobrado uma taxa de R$10,00 para ser enviado um álbum de seleção via google drive</li></ul>
+        </section>
+        </div>
+        <div class="budget-modal-footer">
+          <a class="btn btn-primary" href="https://wa.me/5511914179313?text=Olá! Quero solicitar o orçamento de Ensaios." target="_blank" rel="noopener">Solicitar pelo WhatsApp</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="budget-modal" id="budget-casamentos" aria-hidden="true">
+      <div class="budget-modal-backdrop" data-budget-close></div>
+      <div class="budget-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="title-casamentos">
+        <button class="budget-modal-close" type="button" aria-label="Fechar orçamento" data-budget-close>×</button>
+        <div class="budget-modal-header">
+          <div class="eyebrow">Orçamentos GLFV</div>
+          <h3 id="title-casamentos">Casamentos <span>a partir de R$850,00</span></h3>
+          
+        </div>
+        <div class="budget-modal-content">
+          
+        <section class="budget-detail-section">
+          <h4>Pacotes de fotos — Pacote essência</h4>
+          <ul><li>De R$1000,00 por R$850,00</li><li>1 Profissional</li><li>Fotos digitais ilimitadas todas tratadas e editadas</li><li>Cobertura de até 4 horas de evento</li><li>Hora excedente R$80,00</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Pacotes de fotos — Pacote Legado</h4>
+          <ul><li>De R$2117,65 por R$1800,00</li><li>2 Profissionais</li><li>Fotos digitais ilimitadas todas tratadas e editadas</li><li>Cobertura de até 5 horas de evento</li><li>Hora excedente R$190,00</li><li>Inclui dia da noiva</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Pacotes de fotos — Pacote Eternizar</h4>
+          <ul><li>De R$3647,00 por R$3100,00</li><li>3 Profissionais</li><li>Fotos digitais ilimitadas todas tratadas e editadas</li><li>Cobertura de até 8 horas de evento</li><li>Hora excedente R$300,00</li><li>Inclui dia da noiva</li><li>Inclui pré Wedding</li><li>5 fotos impressas (sem quadro)</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Pré wedding</h4>
+          <ul><li>Pré wedding avulso por R$400,00</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Pacotes de vídeo — Pacote essência</h4>
+          <ul><li>De R$1200,00 por R$1020,00</li><li>1 Profissional</li><li>Vídeo completo da cerimônia na integra</li><li>Cobertura de até 4 horas de evento</li><li>1 Teaser de 5 a 10 minutos</li><li>Hora excedente R$100,00</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Pacotes de vídeo — Pacote Legado</h4>
+          <ul><li>De R$258,00 por R$2200,00</li><li>2 Profissionais</li><li>Vídeo completo da cerimônia na integra</li><li>1 Teaser de 5 a 10 minutos</li><li>1 vídeo horizontal de até 3 minutos</li><li>Cobertura de até 5 horas de evento</li><li>Hora excedente R$220,00</li><li>Inclui dia da noiva</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Pacotes de vídeo — Pacote Eternizar</h4>
+          <ul><li>De R$4117,65 por R$3500,00</li><li>3 profissionais (sendo um com gimbal ou drone)</li><li>Vídeo completo da cerimônia na integra</li><li>1 Teaser de 5 a 10 minutos</li><li>2 vídeo horizontal de até 3 minutos</li><li>1 trailer de até 5 minutos</li><li>Cobertura de até 8 horas de evento</li><li>Hora excedente R$350,00</li><li>Inclui dia da noiva</li><li>Inclui pré Wedding</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Pré wedding</h4>
+          <ul><li>Pré wedding avulso por R$500,00</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Storymaker</h4>
+          <ul><li>Storymaker disponível por R$600,00 valor fixo</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>entrega do material</h4>
+          <ul><li>prévia em até 24hrs pós-evento (quando aplicável)</li><li>100% do material entregue em até 15 dias uteis pós-evento, envio via google drive</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Formas de pagamento</h4>
+          <ul><li>50% pix na reserva da data e serviço, e os outros 50% até o dia do evento</li><li>20% no pix na reserva da data e serviço, os outros 80% no cartão em até 12x (valor sujeito a alteração devido a taxas)</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Local</h4>
+          <ul><li>O local da cobertura fica a critério do contratante, os valores desta tabela contemplam deslocamento de até 30km ida + volta, ultrapassada essa distância será cobrado R$2,00 por km excedido.</li></ul>
+        </section>
+        </div>
+        <div class="budget-modal-footer">
+          <a class="btn btn-primary" href="https://wa.me/5511914179313?text=Olá! Quero solicitar o orçamento de Casamentos." target="_blank" rel="noopener">Solicitar pelo WhatsApp</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="budget-modal" id="budget-debutante" aria-hidden="true">
+      <div class="budget-modal-backdrop" data-budget-close></div>
+      <div class="budget-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="title-debutante">
+        <button class="budget-modal-close" type="button" aria-label="Fechar orçamento" data-budget-close>×</button>
+        <div class="budget-modal-header">
+          <div class="eyebrow">Orçamentos GLFV</div>
+          <h3 id="title-debutante">Debutante <span>a partir de R$850,00</span></h3>
+          
+        </div>
+        <div class="budget-modal-content">
+          
+        <section class="budget-detail-section">
+          <h4>Pacotes de fotos — Pacote essência</h4>
+          <ul><li>De R$1000,00 por R$850,00</li><li>1 Profissional</li><li>Fotos digitais ilimitadas todas tratadas e editadas</li><li>Cobertura de até 4 horas de evento</li><li>Hora excedente R$80,00</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Pacotes de fotos — Pacote Legado</h4>
+          <ul><li>De R$2117,65 por R$1800,00</li><li>2 Profissionais</li><li>Fotos digitais ilimitadas todas tratadas e editadas</li><li>Cobertura de até 5 horas de evento</li><li>Hora excedente R$190,00</li><li>Inclui pré debutante</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Pacotes de fotos — Pacote Eternizar</h4>
+          <ul><li>De R$3647,00 por R$3100,00</li><li>3 Profissionais</li><li>Fotos digitais ilimitadas todas tratadas e editadas</li><li>Cobertura de até 8 horas de evento</li><li>Hora excedente R$300,00</li><li>Inclui pré debutante</li><li>5 fotos impressas (sem quadro)</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Pré debutante</h4>
+          <ul><li>Pré debutante avulso por R$400,00</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Pacotes de vídeo — Pacote essência</h4>
+          <ul><li>De R$1200,00 por R$1020,00</li><li>1 Profissional</li><li>Vídeo completo da cerimônia na integra</li><li>Cobertura de até 4 horas de evento</li><li>1 Teaser de 5 a 10 minutos</li><li>Hora excedente R$100,00</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Pacotes de vídeo — Pacote Legado</h4>
+          <ul><li>De R$258,00 por R$2200,00</li><li>2 Profissionais</li><li>Vídeo completo da cerimônia na integra</li><li>1 Teaser de 5 a 10 minutos</li><li>1 vídeo horizontal de até 3 minutos</li><li>Cobertura de até 5 horas de evento</li><li>Hora excedente R$220,00</li><li>Inclui pré debutante</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Pacotes de vídeo — Pacote Eternizar</h4>
+          <ul><li>De R$4117,65 por R$3500,00</li><li>3 profissionais (sendo um com gimbal ou drone)</li><li>Vídeo completo da cerimônia na integra</li><li>1 Teaser de 5 a 10 minutos</li><li>2 vídeo horizontal de até 3 minutos</li><li>1 trailer de até 5 minutos</li><li>Cobertura de até 8 horas de evento</li><li>Hora excedente R$350,00</li><li>Inclui pré debutante</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Pré debutante</h4>
+          <ul><li>Pré debutante avulso por R$500,00</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Storymaker</h4>
+          <ul><li>Storymaker disponível por R$600,00 valor fixo</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>entrega do material</h4>
+          <ul><li>prévia em até 24hrs pós-evento (quando aplicável)</li><li>100% do material entregue em até 15 dias uteis pós-evento, envio via google drive</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Formas de pagamento</h4>
+          <ul><li>50% pix na reserva da data e serviço, e os outros 50% até o dia do evento</li><li>20% no pix na reserva da data e serviço, os outros 80% no cartão em até 12x (valor sujeito a alteração devido a taxas)</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Local</h4>
+          <ul><li>O local da cobertura fica a critério do contratante, os valores desta tabela contemplam deslocamento de até 30km ida + volta, ultrapassada essa distância será cobrado R$2,00 por km excedido.</li></ul>
+        </section>
+        </div>
+        <div class="budget-modal-footer">
+          <a class="btn btn-primary" href="https://wa.me/5511914179313?text=Olá! Quero solicitar o orçamento de Debutante." target="_blank" rel="noopener">Solicitar pelo WhatsApp</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="budget-modal" id="budget-esportivas" aria-hidden="true">
+      <div class="budget-modal-backdrop" data-budget-close></div>
+      <div class="budget-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="title-esportivas">
+        <button class="budget-modal-close" type="button" aria-label="Fechar orçamento" data-budget-close>×</button>
+        <div class="budget-modal-header">
+          <div class="eyebrow">Orçamentos GLFV</div>
+          <h3 id="title-esportivas">fotos esportivas <span>a partir de R$300,00</span></h3>
+          
+        </div>
+        <div class="budget-modal-content">
+          
+        <section class="budget-detail-section">
+          <h4>pacote para time fechado</h4>
+          <ul><li>Mínimo 10 pessoas</li><li>R$35,00 por pessoa</li><li>fotos ilimitadas</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>pacote pessoal</h4>
+          <ul><li>R$300,00</li><li>de 10 a 30 fotos</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Fotos extras</h4>
+          <ul><li>Venda de fotos extras por R$10,00 cada foto, acima de 5 fotos sai R$8,00 cada foto</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>entrega do material</h4>
+          <ul><li>prévia em até 24hrs pós-evento (quando aplicável)</li><li>100% do material entregue em até 7 dias uteis pós-evento, envio via google drive</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Formas de pagamento</h4>
+          <ul><li>50% pix na reserva da data e serviço, e os outros 50% até o dia do evento</li><li>20% no pix na reserva da data e serviço, os outros 80% no cartão em até 12x (valor sujeito a alteração devido a taxas)</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Local</h4>
+          <ul><li>O local da cobertura fica a critério do contratante, os valores desta tabela contemplam deslocamento de até 30km ida + volta, ultrapassada essa distância será cobrado R$1,00 por km excedido.</li></ul>
+        </section>
+        </div>
+        <div class="budget-modal-footer">
+          <a class="btn btn-primary" href="https://wa.me/5511914179313?text=Olá! Quero solicitar o orçamento de fotos esportivas." target="_blank" rel="noopener">Solicitar pelo WhatsApp</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="budget-modal" id="budget-pre-wedding" aria-hidden="true">
+      <div class="budget-modal-backdrop" data-budget-close></div>
+      <div class="budget-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="title-pre-wedding">
+        <button class="budget-modal-close" type="button" aria-label="Fechar orçamento" data-budget-close>×</button>
+        <div class="budget-modal-header">
+          <div class="eyebrow">Orçamentos GLFV</div>
+          <h3 id="title-pre-wedding">Pré Wedding <span>a partir de R$425,00</span></h3>
+          <p class="budget-modal-intro">O ensaio Pré Wedding é mais do que uma sessão de fotos, é a oportunidade de registrar a essência do casal antes de um dos dias mais importantes de suas vidas. Cada imagem é pensada para contar a história de vocês de forma leve, elegante e atemporal.</p>
+        </div>
+        <div class="budget-modal-content">
+          
+        <section class="budget-detail-section">
+          <h4>Pacote essência</h4>
+          <ul><li>De R$500,00 por 425,00</li><li>até 2 horas de ensaio</li><li>25 fotos tratadas e editadas</li><li>Galeria online para seleção</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Pacote Romance</h4>
+          <ul><li>De R$640,00 por R$544,00</li><li>até 4 horas de ensaio</li><li>50 fotos tratadas e editadas</li><li>Galeria online para seleção</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Pacote eternizar</h4>
+          <ul><li>De R$800,00 por R$680,00</li><li>sem limite de tempo de ensaio</li><li>100 fotos tratadas e editadas</li><li>Galeria online para seleção</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Adicional de Video</h4>
+          <ul><li>De R$600,00 por R$510,00</li><li>1 vídeo horisontal</li><li>1 vídeo vertical (ideal para redes sociais)</li><li>Adicional de save the date por R$200,00</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Fotos extras</h4>
+          <ul><li>Venda de fotos extras por R$10,00 cada foto, acima de 5 fotos sai R$8,00 cada foto</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Formas de pagamento</h4>
+          <ul><li>50% pix na reserva da data e serviço, e os outros 50% até o dia do evento</li><li>20% no pix na reserva da data e serviço, os outros 80% no cartão em até 12x (valor sujeito a alteração devido a taxas)</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>entrega do material</h4>
+          <ul><li>Prévia em até 24hrs pós-evento (quando aplicável)</li><li>100% do material entregue em até 7 dias uteis pós envio da seleção, envio via google drive</li></ul>
+        </section>
+
+        <section class="budget-detail-section">
+          <h4>Local</h4>
+          <ul><li>O local da cobertura fica a critério do contratante, os valores desta tabela contemplam deslocamento de até 30km ida + volta, ultrapassada essa distância será cobrado R$1,00 por km excedido.</li></ul>
+        </section>
+        </div>
+        <div class="budget-modal-footer">
+          <a class="btn btn-primary" href="https://wa.me/5511914179313?text=Olá! Quero solicitar o orçamento de Pré Wedding." target="_blank" rel="noopener">Solicitar pelo WhatsApp</a>
+        </div>
+      </div>
+    </div>
+    
+
+
+    <section class="section quote">
+      <div class="container">
+        <blockquote>
+          “Tudo passa. As fotografias ficam para nos lembrar de <span>quem fomos, quem amamos e como vivemos.</span>”
+        </blockquote>
+      </div>
+    </section>
+
+    <section class="section" id="orcamento">
+      <div class="container">
+        <div class="cta-box">
+          <h2>Sua história merece ser registrada de um jeito inesquecível.</h2>
+          <a class="btn btn-primary" href="https://wa.me/5511914179313" target="_blank" rel="noopener">
+            Falar pelo WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-row">
+      <div>
+        <a class="brand-logo" href="#inicio" aria-label="GLFV Fotografia e Vídeo"><img src="GLFV-logo-branca.png" alt="GLFV Fotografia e Vídeo"></a>
+      </div>
+      <div class="socials">
+        <a href="https://www.instagram.com/gl.photography._?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=" target="_blank" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=glfv2004@gmail.com" target="_blank" rel="noopener noreferrer">E-mail</a>
+        <a href="https://wa.me/5511914179313" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+      <small>© 2026 GLFV Fotografia &amp; Vídeo.</small>
+    </div>
+  </footer>
+
+
+
+    <div class="budget-modal" id="budget-outros" aria-hidden="true">
+      <div class="budget-modal-backdrop" data-budget-close></div>
+      <div class="budget-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="title-outros">
+        <button class="budget-modal-close" type="button" aria-label="Fechar orçamento" data-budget-close>×</button>
+        <div class="budget-modal-header">
+          <div class="eyebrow">Orçamentos GLFV</div>
+          <h3 id="title-outros">Outros <span>Orçamento personalizado</span></h3>
+          <p class="budget-modal-intro">Caso o serviço desejado não esteja especificado no site, você pode solicitar uma proposta personalizada. Descreva o tipo de cobertura, ensaio, produção, quantidade de profissionais, duração estimada, local e qualquer necessidade especial.</p>
+        </div>
+        <div class="budget-modal-content">
+          <section class="budget-detail-section">
+            <h4>Como solicitar</h4>
+            <ul>
+              <li>Informe qual serviço você precisa.</li>
+              <li>Envie a data e o horário previstos.</li>
+              <li>Informe o local da realização.</li>
+              <li>Explique a duração estimada e o tipo de entrega desejada.</li>
+              <li>Inclua referências ou detalhes importantes para a proposta.</li>
+            </ul>
+          </section>
+          <section class="budget-detail-section">
+            <h4>Proposta personalizada</h4>
+            <ul>
+              <li>O valor será calculado de acordo com as necessidades do serviço.</li>
+              <li>Prazo, deslocamento, quantidade de profissionais e formato de entrega serão definidos na proposta.</li>
+              <li>A disponibilidade da data será confirmada no atendimento.</li>
+            </ul>
+          </section>
+        </div>
+        <div class="budget-modal-footer">
+          <a class="btn btn-primary budget-request-btn" href="https://wa.me/5511914179313?text=Ol%C3%A1%21%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento%20personalizado%20para%20um%20servi%C3%A7o%20que%20n%C3%A3o%20est%C3%A1%20especificado%20no%20site." target="_blank" rel="noopener">Solicitar orçamento personalizado</a>
+        </div>
+      </div>
+    </div>
+
+<script>
+(() => {
+  const openModal = (id) => {
+    const modal = document.getElementById(`budget-${id}`);
+    if (!modal) return;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('budget-modal-open');
+    const close = modal.querySelector('.budget-modal-close');
+    if (close) close.focus();
+  };
+
+  const closeModal = (modal) => {
+    if (!modal) return;
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('budget-modal-open');
+  };
+
+  document.querySelectorAll('[data-budget-open]').forEach(card => {
+    card.addEventListener('click', () => openModal(card.dataset.budgetOpen));
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openModal(card.dataset.budgetOpen);
+      }
+    });
+  });
+
+  document.querySelectorAll('[data-budget-close]').forEach(control => {
+    control.addEventListener('click', () => closeModal(control.closest('.budget-modal')));
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal(document.querySelector('.budget-modal.is-open'));
+  });
+})();
+</script>
+
+</body>
+</html>
